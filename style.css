@@ -1,0 +1,131 @@
+:root {
+  --bg: #0a0817;
+  --fg: #ece6f6;
+  --muted: #9a92b3;
+  --line: rgba(222, 210, 184, 0.14);
+  --lamp: #ffb554;
+  --foe: #e05a7d;
+  --paper: #ded2b8;
+  --ink: #2a2238;
+  --wak-bg: #16122a;
+  --wak-accent: #ffb554;
+  --wak-accent-fg: #1a1208;
+}
+
+* { box-sizing: border-box; }
+
+/* Safari 26 の上下バーの色は html の背景から取られる。body と同じ色にしておく */
+html { background-color: var(--bg); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { opacity: 0.4; cursor: default; }
+[hidden] { display: none !important; }
+p { margin: 0; }
+
+/* 画面の端に置くものはセーフエリアの分だけ内側に。高さは 100vh ではなく 100dvh */
+.screen {
+  min-height: 100dvh;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    max(12px, env(safe-area-inset-right))
+    max(12px, env(safe-area-inset-bottom))
+    max(12px, env(safe-area-inset-left));
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pill {
+  border: 1px solid var(--line);
+  background: rgba(222, 210, 184, 0.06);
+  border-radius: 999px;
+  padding: 0 14px;
+  min-height: 36px;
+  font-size: 13px;
+}
+.big {
+  min-height: 52px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--lamp);
+  color: #1a1208;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 0 18px;
+}
+.big.ghost { background: rgba(222, 210, 184, 0.08); color: var(--fg); border: 1px solid var(--line); font-weight: 600; }
+
+/* ---- タイトル ---- */
+.title { align-items: center; gap: 12px; text-align: center; }
+.emblem { width: 96px; height: 96px; margin-top: 8px; }
+.title__name { margin: 0; font-size: 34px; letter-spacing: 0.18em; font-weight: 800; padding-left: 0.18em; }
+.title__tag { color: var(--muted); font-size: 14px; }
+.howto { margin: 4px 0; padding: 12px 14px 12px 32px; text-align: left; font-size: 13px; line-height: 1.6; color: #cfc8de;
+  background: rgba(222, 210, 184, 0.05); border-radius: 14px; }
+.howto li + li { margin-top: 4px; }
+.howto b { color: var(--foe); }
+.notice { color: var(--lamp); font-size: 13px; }
+.menu { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.menu .big { width: 100%; }
+.menu.first #tutorial { order: -1; background: var(--paper); color: var(--ink); }
+.tonight { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 16px; border: 1px solid rgba(255, 181, 84, 0.3); }
+.tonight__day { font-size: 14px; }
+.tonight__streak { font-size: 12px; color: var(--lamp); }
+.title__sub { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: auto; }
+.credit { font-size: 12px; color: var(--muted); }
+.credit a { color: inherit; }
+
+/* ---- 刻 ---- */
+.play { gap: 8px; }
+.hud { display: flex; align-items: center; gap: 10px; }
+.hud .pill { min-height: 44px; }
+.hud__mid { flex: 1; }
+.hud__stage { font-weight: 700; font-size: 16px; }
+.hud__turn { font-size: 12px; color: var(--muted); }
+.hud__side { text-align: right; }
+.hud__stars { font-size: 14px; letter-spacing: 0.1em; color: var(--lamp); min-height: 1em; }
+.hud__lamps { display: flex; gap: 4px; justify-content: flex-end; margin-top: 2px; }
+.lamp-icon { width: 12px; height: 16px; border-radius: 4px; background: var(--lamp); box-shadow: 0 0 0 2px rgba(255, 181, 84, 0.25); }
+.lamp-icon.out { background: #3a3150; box-shadow: none; }
+.lesson { padding: 10px 12px; border-radius: 12px; background: rgba(222, 210, 184, 0.07); font-size: 13px; line-height: 1.55; }
+.lesson__goal { margin-top: 4px; color: var(--lamp); }
+.board { width: 100%; max-width: min(100%, 58dvh); aspect-ratio: 1; align-self: center; display: block; touch-action: manipulation; }
+.info { min-height: 2.7em; font-size: 14px; line-height: 1.35; color: #d8d0e6; text-align: center; }
+.info.warn { color: #ff9bb3; }
+.extra { display: flex; gap: 8px; justify-content: center; min-height: 44px; }
+.extra .pill { min-height: 44px; padding: 0 16px; }
+.extra .pill[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+.controls { display: grid; grid-template-columns: 1fr 2fr; gap: 10px; margin-top: auto; }
+
+/* 強化の 3 択・手引きの結果: 盤の上に下寄せで重ねる */
+.sheet { position: fixed; inset: 0; display: flex; align-items: flex-end; justify-content: center; background: rgba(5, 4, 12, 0.55);
+  padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); }
+.sheet__box { width: 100%; max-width: 496px; background: #16122a; border: 1px solid var(--line); border-radius: 20px; padding: 18px;
+  display: flex; flex-direction: column; gap: 12px; }
+.sheet h2 { margin: 0; font-size: 20px; }
+.sheet__line { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.cards { display: flex; flex-direction: column; gap: 8px; }
+.card { text-align: left; border: 1px solid var(--line); background: rgba(222, 210, 184, 0.05); border-radius: 12px; padding: 10px 14px; min-height: 52px; }
+.card b { display: block; font-size: 16px; }
+.card span { font-size: 13px; color: var(--muted); }
+.card[aria-pressed="true"] { border-color: var(--lamp); background: rgba(255, 181, 84, 0.12); }
+
+/* ---- 夜の結果 ---- */
+.result { justify-content: center; gap: 16px; text-align: center; }
+.result__head { margin: 0; font-size: 28px; }
+.result__stars { font-size: 20px; letter-spacing: 0.08em; color: var(--lamp); }
+.result__stats { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0 auto; text-align: left; font-size: 15px; }
+.result__stats dt { color: var(--muted); }
+.result__stats dd { margin: 0; }
+.result__seed { font-size: 12px; color: var(--muted); }
+.result__buttons { display: flex; flex-direction: column; gap: 10px; }

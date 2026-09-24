@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0817">
+  <meta name="description" content="夜の町の灯を、三つの駒で敵の攻撃から守る盤の上の戦術ゲーム。敵が次にどこを撃つかは全部見えているので、押す・壁を建てる・向きを変えるで攻撃をそらし、三つの刻を守り抜く。">
+  <title>DAWNWARD — 攻撃をそらして灯を守る</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DAWNWARD">
+  <meta property="og:title" content="DAWNWARD — 攻撃をそらして灯を守る">
+  <meta property="og:description" content="夜の町の灯を、三つの駒で敵の攻撃から守る盤の上の戦術ゲーム。敵が次にどこを撃つかは全部見えているので、押す・壁を建てる・向きを変えるで攻撃をそらし、三つの刻を守り抜く。">
+  <meta property="og:url" content="https://t-of.github.io/dawnward/">
+  <meta property="og:image" content="https://t-of.github.io/dawnward/icons/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- apple-mobile-web-app-status-bar-style は付けない（black-translucent だと iOS 26 で上部が隠れる） -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="DAWNWARD">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./webapp-kit/webapp-kit.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <section class="screen title" id="title">
+    <svg class="emblem" viewBox="0 0 120 120" aria-hidden="true">
+      <defs><radialGradient id="glow"><stop offset="0" stop-color="#ffb554" stop-opacity=".55"/><stop offset="1" stop-color="#ffb554" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="60" cy="44" r="40" fill="url(#glow)"/>
+      <rect x="50" y="14" width="20" height="6" rx="2" fill="#7a4a1a"/>
+      <rect x="45" y="20" width="30" height="40" rx="8" fill="#ffb554"/>
+      <rect x="52" y="27" width="16" height="26" rx="4" fill="#fff1c9"/>
+      <rect x="50" y="60" width="20" height="6" rx="2" fill="#7a4a1a"/>
+      <circle cx="28" cy="94" r="13" fill="#ded2b8" stroke="#2a2238" stroke-width="3"/>
+      <rect x="48" y="81" width="24" height="24" rx="3" fill="#ded2b8" stroke="#2a2238" stroke-width="3"/>
+      <path d="M92 79 L106 93 L92 107 L78 93 Z" fill="#ded2b8" stroke="#2a2238" stroke-width="3"/>
+    </svg>
+    <h1 class="title__name">DAWNWARD</h1>
+    <p class="title__tag">攻撃をそらして灯を守る</p>
+    <ol class="howto">
+      <li>赤いマスは、このターンの終わりに<b>必ず</b>攻撃される。そこにある灯は消える。</li>
+      <li>三つの駒は、それぞれ 1 回動いて 1 回手を出せる。鞠は押す、楯は壁を建てる、梶は敵の向きを回す。敵は盤の外へ押し出すと落ちる。</li>
+      <li>決められたターンを耐えれば、その刻は勝ち。灯を 1 つも消さずに守れば星。灯が全部消えたら夜が終わる。確定までは何度でも戻せる。</li>
+    </ol>
+    <p class="notice" id="notice" hidden></p>
+    <div class="menu" id="menu">
+      <button class="big ghost" id="tutorial">手引き</button>
+      <div class="tonight">
+        <p class="tonight__day" id="tonightDay"></p>
+        <p class="tonight__streak" id="streak" hidden></p>
+        <button class="big" id="daily">今夜を守る</button>
+      </div>
+      <button class="big ghost" id="resume" hidden>続きから</button>
+      <button class="big ghost" id="free">好きな夜</button>
+    </div>
+    <div class="title__sub">
+      <button class="pill" id="sound" aria-pressed="true">音 オン</button>
+      <button class="pill" data-wak="install" hidden>アプリにする</button>
+      <button class="pill" data-wak="share">共有</button>
+    </div>
+    <p class="credit"><a href="/">T.OF...</a> のアプリ</p>
+  </section>
+
+  <section class="screen play" id="play" hidden>
+    <header class="hud">
+      <button class="pill" id="back">もどる</button>
+      <div class="hud__mid">
+        <p class="hud__stage" id="stageName"></p>
+        <p class="hud__turn" id="turn"></p>
+      </div>
+      <div class="hud__side">
+        <p class="hud__stars" id="stars"></p>
+        <p class="hud__lamps" id="lamps"></p>
+      </div>
+    </header>
+    <div class="lesson" id="lesson" hidden>
+      <p class="lesson__teach" id="lessonTeach"></p>
+      <p class="lesson__goal">目標: <b id="lessonGoal"></b></p>
+    </div>
+    <svg class="board" id="board" viewBox="0 0 600 600" role="img" aria-label="盤"></svg>
+    <p class="info" id="info" aria-live="polite"></p>
+    <div class="extra" id="extra"></div>
+    <div class="controls">
+      <button class="big ghost" id="undo">一手戻す</button>
+      <button class="big" id="confirm">確定</button>
+    </div>
+
+    <div class="sheet" id="choose" hidden>
+      <div class="sheet__box">
+        <h2 id="chooseTitle"></h2>
+        <p class="sheet__line" id="chooseLine"></p>
+        <div class="cards" id="cards"></div>
+        <button class="big" id="take" disabled>これにする</button>
+      </div>
+    </div>
+    <div class="sheet" id="lessonEnd" hidden>
+      <div class="sheet__box">
+        <h2 id="lessonEndTitle"></h2>
+        <p class="sheet__line" id="lessonEndLine"></p>
+        <button class="big" id="lessonNext"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen result" id="result" hidden>
+    <h2 class="result__head" id="resultHead"></h2>
+    <p class="result__stars" id="resultStars"></p>
+    <dl class="result__stats" id="resultStats"></dl>
+    <p class="result__seed" id="resultSeed" hidden></p>
+    <div class="result__buttons">
+      <button class="big" id="shareResult">共有</button>
+      <button class="big ghost" id="again" hidden>もう一夜</button>
+      <button class="big ghost" id="toTitle">タイトルへ</button>
+    </div>
+  </section>
+
+  <script src="./webapp-kit/webapp-kit.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

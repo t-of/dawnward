@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "DAWNWARD — 攻撃をそらして灯を守る",
+  "short_name": "DAWNWARD",
+  "description": "夜の町の灯を、三つの駒で敵の攻撃から守る盤の上の戦術ゲーム。敵が次にどこを撃つかは全部見えているので、押す・壁を建てる・向きを変えるで攻撃をそらし、三つの刻を守り抜く。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0817",
+  "theme_color": "#0a0817",
+  "lang": "ja",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
