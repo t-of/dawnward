@@ -1,1 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#0a0817"/><text x="256" y="256" dy=".35em" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="280" fill="#eceef3">D</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0a0817"/>
+    <stop offset="0.62" stop-color="#171233"/>
+    <stop offset="1" stop-color="#3a2a3f"/>
+  </linearGradient>
+  <radialGradient id="horizon" cx="0.5" cy="1.05" r="0.75">
+    <stop offset="0" stop-color="#ffb554" stop-opacity="0.4"/>
+    <stop offset="1" stop-color="#ffb554" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.4" r="0.6">
+    <stop offset="0" stop-color="#ffe6b3" stop-opacity="0.9"/>
+    <stop offset="1" stop-color="#ffb554" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="lamp" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff1c9"/>
+    <stop offset="0.55" stop-color="#ffb554"/>
+    <stop offset="1" stop-color="#e8892f"/>
+  </linearGradient>
+</defs>
+
+<rect width="512" height="512" rx="112" fill="url(#sky)"/>
+<rect width="512" height="512" rx="112" fill="url(#horizon)"/>
+
+<!-- 星 -->
+<circle cx="120" cy="96" r="2.4" fill="#fff" opacity="0.55"/>
+<circle cx="392" cy="80" r="2" fill="#fff" opacity="0.45"/>
+<circle cx="430" cy="150" r="1.8" fill="#fff" opacity="0.4"/>
+<circle cx="88" cy="180" r="1.8" fill="#fff" opacity="0.4"/>
+
+<!-- 攻撃の線: 敵の一撃が梶に当たって逸れる -->
+<path d="M388 152 L326 300" stroke="#e05a7d" stroke-width="22" stroke-linecap="round" opacity="0.95"/>
+<path d="M326 300 L210 384" stroke="#e05a7d" stroke-width="22" stroke-linecap="round" opacity="0.55"/>
+
+<!-- 灯籠のうしろの光暈 -->
+<circle cx="256" cy="216" r="150" fill="url(#glow)"/>
+
+<!-- 梶(菱形)の駒: 攻撃をそらす -->
+<path d="M326 250 L376 300 L326 350 L276 300 Z" fill="#ded2b8" stroke="#2a2238" stroke-width="6" stroke-linejoin="round"/>
+
+<!-- 灯籠 -->
+<rect x="230" y="150" width="52" height="24" rx="6" fill="#4a4475"/>
+<rect x="206" y="176" width="100" height="128" rx="30" fill="url(#lamp)"/>
+<rect x="230" y="196" width="52" height="88" rx="16" fill="#fff6de" opacity="0.65"/>
+
+</svg>
